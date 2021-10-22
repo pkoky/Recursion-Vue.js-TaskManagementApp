@@ -180,6 +180,14 @@
                 <input class="form-control" type="text" v-bind:value="section.sectionName">
             </div>
 
+            <div v-for="(task, index) in section.tasks">
+                <task-card
+                    v-bind:task="task"
+                    v-bind:index="index"
+                    v-on:delete-task="deleteTask($event)"
+                ></task-card>
+            </div>
+
             <createTask-Form 
                 v-show="section.show"
                 v-bind:section="section"
@@ -210,6 +218,36 @@
             <div class="buttons d-flex justify-content-end">
                 <div class="addTaskButton" v-on:click="addTask">
                     <button class="btn btn-outline-info btn-sm">Add</button>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <!-- taskCardTemplate -->
+    <script type="text/x-template" id="taskCardComponent">
+        <div class="taskCard card p-3 mb-3">
+            <div class="selectSection pb-2">
+                <select class="form-select form-select-sm">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+            <div class="taskTitle ">
+                <h4>{{task.title}}</h4>
+            </div>
+            <div class="taskDescription py-2 ">
+                <p>{{task.description}}</p>
+            </div>
+            <div class="buttons d-flex justify-content-end">
+                <div class="col-6 d-flex justify-content-around">
+                    <!-- editButton -->
+                    <i class="fas fa-edit"></i>
+                    <!-- checkButton -->
+                    <i v-bind:class="{'far fa-check-circle': !task.completed, 'fas fa-check-circle': task.completed}" v-on:click="switchCompleted"></i>
+                    <!-- favoriteButton -->
+                    <i v-bind:class="{'far fa-star text-warning': !task.favorite, 'fas fa-star': task.favorite}" v-on:click="switchFavorite"></i>
+                    <!-- trashcanButton -->
+                    <i class="far fa-trash-alt" v-on:click="$emit('delete-task', index)"></i>
                 </div>
             </div>
         </div>

@@ -36,6 +36,19 @@ class Control {
 }
 
 
+var taskCardComponent = ({
+    props: ['task','index'],
+    template: '#taskCardComponent',
+    methods: {
+        switchCompleted() {
+            this.task.completed = this.task.completed ? false : true;
+        },
+        switchFavorite() {
+            this.task.favorite = this.task.favorite ? false : true;
+        },
+    }
+})
+
 
 var createTaskForm = ({
     props: ['section'],
@@ -50,7 +63,9 @@ var createTaskForm = ({
         addTask() {
             this.section.show = false;
             this.section.tasks.push(Control.createTaskObject(this.title, this.description));
-        }
+            this.title = '',
+            this.description = '';
+        },
     }
 })
 
@@ -58,23 +73,30 @@ var createTaskForm = ({
 
 var sectionComponent = ({
     props: ['section','id'],
+    template: '#sectionComponent',
+
     data: function () {
         return {
           count: 0
         }
       },
+
       created: function() {
           this.section.id = this.id;
       },
+
       methods: {
         switchTaskForm() {
             this.section.show = this.section.show ? false : true;
+        },
+        deleteTask(index) {
+            this.section.tasks.splice(index,1);
         }
       },
-      template: '#sectionComponent',
+
       components: {
           'createTask-Form' : createTaskForm,
-
+          'task-card' : taskCardComponent,
       }
 })
 
