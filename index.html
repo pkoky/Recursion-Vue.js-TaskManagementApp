@@ -35,9 +35,10 @@
 
                 <!-- Sections -->
                 <div class="sections d-flex flex-wrap col-11">
-                    <div class="eachSection d-flex flex-column col-12 col-md-3 my-3 px-2 " v-for="section in sections">
+                    <div class="eachSection d-flex flex-column col-12 col-md-3 my-3 px-2 " v-for="(section,index) in sections">
                         <section-component
                             v-bind:section = "section"
+                            v-bind:id="index+1"
                         ></section-component>
                     </div>
                 </div>
@@ -178,12 +179,37 @@
             <div class="sectionName text-center mb-3">
                 <input class="form-control" type="text" v-bind:value="section.sectionName">
             </div>
+
+            <createTask-Form 
+                v-show="section.show"
+                v-bind:section="section"
+            ></createTask-Form>
+
             <div class="d-flex justify-content-between pt-3">
-                <div class="addTaskButton">
+                <div class="addTaskButton" v-on:click="switchTaskForm">
                     <i class="fas fa-plus-circle fa-2x text-white"></i>
                 </div>
                 <div class="deleteSection">
                     <button class="btn btn-outline-danger btn-sm">Delete Section</button>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <!-- createTaskFormTemplate -->
+    <script type="text/x-template" id="createTaskFormComponent">
+        <div class="createTask card p-3">
+            <div class="taskTitle">
+                <h5>Task Title</h5>
+                <input class="form-control" type="text" v-model="title">
+            </div>
+            <div class="taskDescription py-3">
+                <h5>Task Description</h5>
+                <textarea class="form-control" v-model="description"></textarea>
+            </div>
+            <div class="buttons d-flex justify-content-end">
+                <div class="addTaskButton" v-on:click="addTask">
+                    <button class="btn btn-outline-info btn-sm">Add</button>
                 </div>
             </div>
         </div>
