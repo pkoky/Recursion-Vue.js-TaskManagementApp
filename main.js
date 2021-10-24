@@ -2,9 +2,10 @@ class Task {
     constructor(title, description, sectionId) {
         this.title = title;
         this.description = description;
+        this.sectionId = sectionId
         this.completed = false;
         this.favorite = false;
-        this.sectionId = sectionId
+        this.editForm = false;
     }
 }
 
@@ -15,7 +16,7 @@ class Section {
         this.sectionName = sectionName;
         this.tasks = [];
         this.id = id;
-        this.show = false;
+        this.createTaskForm = false;
     }
 }
 
@@ -41,22 +42,27 @@ class Controller {
                 return index;
             }
         }
-        return 'no';
     }
+
+    
 }
 
 
 var taskCardComponent = ({
-    props: ['task', 'index', 'sections'],
+    props: ['task', 'index', 'sections', 'section'],
     template: '#taskCardComponent',
     data() {
         return {
-            selectedSection: this.task.sectionId,
+            selectedSection: this.section,
         }
     },
 
     methods: {
-        
+        changeSection() {
+            let targetSectionId = this.selectedSection.id;
+            let targetTaskObject = this.section.tasks.splice(this.index, 1);
+            this.selectedSection.tasks.push(targetTaskObject);
+        }
     }
 })
 
@@ -70,9 +76,10 @@ var createTaskFormComponent = ({
             description: '',
         }
     },
+
     methods: {
         addTask() {
-            this.section.show = false;
+            this.section.createTaskForm = false;
             this.section.tasks.push(Controller.createTaskObject(this.title, this.description, this.section.id));
             this.title = '',
             this.description = '';
@@ -88,32 +95,28 @@ var sectionComponent = ({
 
     data: function () {
         return {
-          count: 0
+          count: 0,
         }
       },
 
-      created: function() {
-          this.section.id = this.id;
-      },
+    created: function() {
+        this.section.id = this.id;
+    },
 
-      methods: {
-        switchTaskForm() {
-            this.section.show = this.section.show ? false : true;
-        },
+    methods: {
         deleteTask(index) {
             this.section.tasks.splice(index,1);
         },
-        
         deleteSection() {
             let targetIndex = Controller.getTargetSectionIndex(this.sections, this.id);
             this.sections.splice(targetIndex, 1)
-        }
-      },
+        },
+    },
 
-      components: {
-          'createTask-Form' : createTaskFormComponent,
-          'task-card' : taskCardComponent,
-      }
+    components: {
+        'createTask-Form' : createTaskFormComponent,
+        'task-card' : taskCardComponent,
+    }
 })
 
 
@@ -134,6 +137,7 @@ new Vue({
             console.log(targetArr.section)
         }
     },
+
     components: {
         'section-component' : sectionComponent,
     }
