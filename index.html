@@ -15,7 +15,7 @@
 </head>
 <body>
     <div id="taskManagementApp">
-        <div class="bg-info text-dark d-flex justify-content-center">
+        <div class="bg-info vh-100 text-dark d-flex justify-content-center">
             <div class="d-flex flex-column align-items-center col-12">
                 <!-- Title -->
                 <div class="title d-flex justify-content-center align-items-center text-light">
@@ -39,6 +39,8 @@
                         <section-component
                             v-bind:section = "section"
                             v-bind:id="index+1"
+                            v-bind:sections = "sections"
+                            v-on:change-section="changeSection($event)" 
                         ></section-component>
                     </div>
                 </div>
@@ -46,7 +48,7 @@
 
 
 
-                <div class="sections d-flex flex-wrap col-11">
+                <!-- <div class="sections d-flex flex-wrap col-11">
                     <div class="eachSection d-flex flex-column col-12 col-md-3 my-3 px-2">
                         <div class="border border-light p-2">
                             <div class="sectionName text-center mb-3">
@@ -167,13 +169,14 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
+
             </div>
         </div>
     </div>
 
 
-    <!-- sectionTemplate -->
+    <!-- sectionComponent -->
     <script type="text/x-template" id="sectionComponent">
         <div class="border border-light p-2">
             <div class="sectionName text-center mb-3">
@@ -184,7 +187,9 @@
                 <task-card
                     v-bind:task="task"
                     v-bind:index="index"
+                    v-bind:sections="sections"
                     v-on:delete-task="deleteTask($event)"
+                    v-on:change-section="$emit('change-section', $event)" 
                 ></task-card>
             </div>
 
@@ -198,23 +203,26 @@
                     <i class="fas fa-plus-circle fa-2x text-white"></i>
                 </div>
                 <div class="deleteSection">
-                    <button class="btn btn-outline-danger btn-sm">Delete Section</button>
+                    <button class="btn btn-outline-danger btn-sm" v-on:click="deleteSection">Delete Section</button>
                 </div>
             </div>
         </div>
     </script>
 
-    <!-- createTaskFormTemplate -->
+
+    <!-- createTaskFormComponent -->
     <script type="text/x-template" id="createTaskFormComponent">
         <div class="createTask card p-3">
             <div class="taskTitle">
                 <h5>Task Title</h5>
                 <input class="form-control" type="text" v-model="title">
             </div>
+
             <div class="taskDescription py-3">
                 <h5>Task Description</h5>
                 <textarea class="form-control" v-model="description"></textarea>
             </div>
+
             <div class="buttons d-flex justify-content-end">
                 <div class="addTaskButton" v-on:click="addTask">
                     <button class="btn btn-outline-info btn-sm">Add</button>
@@ -223,35 +231,39 @@
         </div>
     </script>
 
-    <!-- taskCardTemplate -->
+
+    <!-- taskCardComponent -->
     <script type="text/x-template" id="taskCardComponent">
-        <div class="taskCard card p-3 mb-3">
+        <div class="taskCard card p-3 mb-3" v-bind:class="{'border border-success border-4': task.completed}">
             <div class="selectSection pb-2">
-                <select class="form-select form-select-sm">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
+                <select  class="form-select form-select-sm" v-on:change="$emit('change-section', {'index':index, 'section': selectedSection});"  v-model="selectedSection">
+                    <option v-for="section in sections" v-bind:selected="section.id == task.sectionId" v-bind:value="section">{{section.sectionName}}</option>
                 </select>
             </div>
+
             <div class="taskTitle ">
                 <h4>{{task.title}}</h4>
             </div>
+
             <div class="taskDescription py-2 ">
                 <p>{{task.description}}</p>
             </div>
+
             <div class="buttons d-flex justify-content-end">
                 <div class="col-6 d-flex justify-content-around">
                     <!-- editButton -->
                     <i class="fas fa-edit"></i>
                     <!-- checkButton -->
-                    <i v-bind:class="{'far fa-check-circle': !task.completed, 'fas fa-check-circle': task.completed}" v-on:click="switchCompleted"></i>
+                    <i class="text-success" v-bind:class="{'far fa-check-circle': !task.completed, 'fas fa-check-circle': task.completed}" v-on:click="task.completed = !task.completed"></i>
                     <!-- favoriteButton -->
-                    <i v-bind:class="{'far fa-star text-warning': !task.favorite, 'fas fa-star': task.favorite}" v-on:click="switchFavorite"></i>
+                    <i class="text-warning" v-bind:class="{'far fa-star': !task.favorite, 'fas fa-star': task.favorite}" v-on:click="task.favorite = !task.favorite"></i>
                     <!-- trashcanButton -->
                     <i class="far fa-trash-alt" v-on:click="$emit('delete-task', index)"></i>
                 </div>
             </div>
         </div>
     </script>
+
 
     <!-- js読み込み -->
     <script src="main.js"></script>

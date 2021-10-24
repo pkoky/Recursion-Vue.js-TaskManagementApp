@@ -1,9 +1,10 @@
 class Task {
-    constructor(title, description) {
+    constructor(title, description, sectionId) {
         this.title = title;
         this.description = description;
         this.completed = false;
         this.favorite = false;
+        this.sectionId = sectionId
     }
 }
 
@@ -20,7 +21,7 @@ class Section {
 
 
 
-class Control {
+class Controller {
     static test() {
         console.log('ok')
     }
@@ -30,27 +31,37 @@ class Control {
         return obj;
     }
 
-    static createTaskObject(title, description) {
-        return new Task(title, description);
+    static createTaskObject(title, description, sectionId) {
+        return new Task(title, description, sectionId);
+    }
+
+    static getTargetSectionIndex(sectionsArr, targetId) {
+        for(let index in sectionsArr) {
+            if (sectionsArr[index].id == targetId) {
+                return index;
+            }
+        }
+        return 'no';
     }
 }
 
 
 var taskCardComponent = ({
-    props: ['task','index'],
+    props: ['task', 'index', 'sections'],
     template: '#taskCardComponent',
+    data() {
+        return {
+            selectedSection: this.task.sectionId,
+        }
+    },
+
     methods: {
-        switchCompleted() {
-            this.task.completed = this.task.completed ? false : true;
-        },
-        switchFavorite() {
-            this.task.favorite = this.task.favorite ? false : true;
-        },
+        
     }
 })
 
 
-var createTaskForm = ({
+var createTaskFormComponent = ({
     props: ['section'],
     template: '#createTaskFormComponent',
     data() {
@@ -62,7 +73,7 @@ var createTaskForm = ({
     methods: {
         addTask() {
             this.section.show = false;
-            this.section.tasks.push(Control.createTaskObject(this.title, this.description));
+            this.section.tasks.push(Controller.createTaskObject(this.title, this.description, this.section.id));
             this.title = '',
             this.description = '';
         },
@@ -72,7 +83,7 @@ var createTaskForm = ({
 
 
 var sectionComponent = ({
-    props: ['section','id'],
+    props: ['section', 'id', 'sections'],
     template: '#sectionComponent',
 
     data: function () {
@@ -91,11 +102,16 @@ var sectionComponent = ({
         },
         deleteTask(index) {
             this.section.tasks.splice(index,1);
+        },
+        
+        deleteSection() {
+            let targetIndex = Controller.getTargetSectionIndex(this.sections, this.id);
+            this.sections.splice(targetIndex, 1)
         }
       },
 
       components: {
-          'createTask-Form' : createTaskForm,
+          'createTask-Form' : createTaskFormComponent,
           'task-card' : taskCardComponent,
       }
 })
@@ -110,8 +126,12 @@ new Vue({
     },
     methods: {
         createSection() {
-            this.sections.push(Control.createSectionObject(this.newSectionTitle));
+            this.sections.push(Controller.createSectionObject(this.newSectionTitle));
             this.newSectionTitle = '';
+        },
+        changeSection(targetArr) {
+            console.log(targetArr.section.id)
+            console.log(targetArr.section)
         }
     },
     components: {
