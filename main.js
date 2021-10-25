@@ -134,11 +134,18 @@ new Vue({
             let curr = window.scrollY;
             let area = document.getElementById('inputSection');
             let isContainFixed = area.classList.contains('fixed');
+            let sectionsArea = document.getElementById('sections');
             if (curr > 46 && !isContainFixed) {
                 area.classList.add('fixed');
+                sectionsArea.classList.add('pt-5');
+                console.log(sectionsArea.classList)
             }
-            else if(curr <= 46 && isContainFixed)
+            else if(curr <= 46 && isContainFixed) {
                 area.classList.remove('fixed');
+                sectionsArea.classList.remove('pt-5');
+                console.log(sectionsArea.classList)
+            }
+
         }
     },
 
