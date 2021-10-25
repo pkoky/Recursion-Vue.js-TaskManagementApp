@@ -1,8 +1,7 @@
 class Task {
-    constructor(title, description, sectionId) {
+    constructor(title, description) {
         this.title = title;
         this.description = description;
-        this.sectionId = sectionId
         this.completed = false;
         this.favorite = false;
         this.editForm = false;
@@ -23,17 +22,13 @@ class Section {
 
 
 class Controller {
-    static test() {
-        console.log('ok')
-    }
-
     static createSectionObject(value) {
         let obj = new Section(value);
         return obj;
     }
 
-    static createTaskObject(title, description, sectionId) {
-        return new Task(title, description, sectionId);
+    static createTaskObject(title, description) {
+        return new Task(title, description);
     }
 
     static getTargetSectionIndex(sectionsArr, targetId) {
@@ -43,12 +38,6 @@ class Controller {
             }
         }
     }
-
-    static relocation() {
-        console.log('ok')
-    }
-
-    
 }
 
 
@@ -90,7 +79,7 @@ var createTaskFormComponent = ({
     methods: {
         addTask() {
             this.section.createTaskForm = false;
-            this.section.tasks.push(Controller.createTaskObject(this.title, this.description, this.section.id));
+            this.section.tasks.push(Controller.createTaskObject(this.title, this.description));
             this.title = '',
             this.description = '';
         },
@@ -100,17 +89,12 @@ var createTaskFormComponent = ({
 
 
 var sectionComponent = ({
-    props: ['section', 'id', 'sections'],
+    props: ['section', 'sectionId', 'sections'],
     template: '#sectionComponent',
 
-    data: function () {
-        return {
-          count: 0,
-        }
-      },
-
+    //　インスタンス生成時にIDをセット
     created: function() {
-        this.section.id = this.id;
+        this.section.id = this.sectionId;
     },
 
     methods: {
@@ -118,7 +102,7 @@ var sectionComponent = ({
             this.section.tasks.splice(index,1);
         },
         deleteSection() {
-            let targetIndex = Controller.getTargetSectionIndex(this.sections, this.id);
+            let targetIndex = Controller.getTargetSectionIndex(this.sections, this.section.id);
             this.sections.splice(targetIndex, 1)
         },
     },

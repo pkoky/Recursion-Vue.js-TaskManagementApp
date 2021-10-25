@@ -39,7 +39,7 @@
                     <div class="eachSection d-flex flex-column col-12 col-md-3 my-3 px-2 " v-for="(section,index) in sections">
                         <section-component
                             v-bind:section = "section"
-                            v-bind:id="index+1"
+                            v-bind:section-id="index+1"
                             v-bind:sections = "sections"
                             v-on:change-section="changeSection($event)" 
                         ></section-component>
@@ -47,7 +47,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
 
@@ -55,7 +54,7 @@
     <script type="text/x-template" id="sectionComponent">
         <div class="border border-light p-2">
             <div class="sectionName text-center mb-3">
-                <input class="form-control" type="text" v-model="section.sectionName" >
+                <input class="form-control" type="text" v-model="section.sectionName">
             </div>
 
             <div v-for="(task, index) in section.tasks">
