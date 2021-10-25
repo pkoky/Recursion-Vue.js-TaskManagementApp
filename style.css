@@ -1,3 +1,10 @@
 body {
-    font-family: Futura!important;
+  font-family: Futura !important;
+  margin: 0;
+  padding: 0;
+}
+
+#inputSection.fixed {
+  position: fixed;
+  padding: 10px 0;
 }

@@ -121,14 +121,24 @@ new Vue({
         newSectionTitle: '',
         sections: [],
     },
+    created() {
+        window.addEventListener('scroll', this.scrollEvent);
+    },
+
     methods: {
         createSection() {
             this.sections.push(Controller.createSectionObject(this.newSectionTitle));
             this.newSectionTitle = '';
         },
-        changeSection(targetArr) {
-            console.log(targetArr.section.id)
-            console.log(targetArr.section)
+        scrollEvent() {
+            let curr = window.scrollY;
+            let area = document.getElementById('inputSection');
+            let isContainFixed = area.classList.contains('fixed');
+            if (curr > 46 && !isContainFixed) {
+                area.classList.add('fixed');
+            }
+            else if(curr <= 46 && isContainFixed)
+                area.classList.remove('fixed');
         }
     },
 
