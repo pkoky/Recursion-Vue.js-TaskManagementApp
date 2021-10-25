@@ -14,6 +14,7 @@
     <title>TaskManagementApp</title>
 </head>
 <body>
+
     <div id="taskManagementApp">
         <div class="bg-info vh-100 text-dark d-flex justify-content-center" style="min-height: 100rem">
             <div class="d-flex flex-column align-items-center col-12">
@@ -44,135 +45,9 @@
                         ></section-component>
                     </div>
                 </div>
-
-
-
-
-                <!-- <div class="sections d-flex flex-wrap col-11">
-                    <div class="eachSection d-flex flex-column col-12 col-md-3 my-3 px-2">
-                        <div class="border border-light p-2">
-                            <div class="sectionName text-center mb-3">
-                                <input class="form-control" type="text" value="monday">
-                            </div>
-
-                            <div class="taskCardsArea">
-                                <div class="taskCard card p-3 mb-3 border border-success border-5">
-                                    <div class="selectSection pb-2">
-                                        <select class="form-select form-select-sm">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                        </select>
-                                    </div>
-                                    <div class="taskTitle ">
-                                        <h4>monday</h4>
-                                    </div>
-                                    <div class="taskDescription py-2 ">
-                                        <p>洗濯するsdkljsfdkjskjfkljfkdsjlkfdsjfsdkljfsdlkjfsdlkfjfkfjsfdsjfdslkj</p>
-                                    </div>
-                                    <div class="buttons d-flex justify-content-end">
-                                        <div class="col-6 d-flex justify-content-around">
-                                            <i class="fas fa-edit"></i>
-                                            <i class="far fa-check-circle text-success"></i>
-                                            <i class="far fa-star text-warning"></i>
-                                            <i class="far fa-trash-alt"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="taskCard card p-3 mb-3">
-                                    <div class="selectSection pb-2">
-                                        <select class="form-select form-select-sm">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                        </select>
-                                    </div>
-                                    <div class="taskTitle ">
-                                        <h4>monday</h4>
-                                    </div>
-                                    <div class="taskDescription py-2 ">
-                                        <p>洗濯するsdkljsfdkjskjfkljfkdsjlkfdsjfsdkljfsdlkjfsdlkfjfkfjsfdsjfdslkj</p>
-                                    </div>
-                                    <div class="buttons d-flex justify-content-end">
-                                        <div class="col-6 d-flex justify-content-around">
-                                            <i class="fas fa-edit"></i>
-                                            <i class="far fa-trash-alt"></i>
-                                            <i class="far fa-check-circle"></i>
-                                            <i class="far fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="createTask card p-3">
-                                    <div class="taskTitle">
-                                        <h5>Task Title</h5>
-                                        <input class="form-control" type="text">
-                                    </div>
-                                    <div class="taskDescription py-3">
-                                        <h5>Task Description</h5>
-                                        <textarea class="form-control"></textarea>
-                                    </div>
-                                    <div class="buttons d-flex justify-content-end">
-                                        <div class="addTaskButton">
-                                            <button class="btn btn-outline-info btn-sm">Add</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                            <div class="d-flex justify-content-between pt-3">
-                                <div class="addTaskButton">
-                                    <i class="fas fa-plus-circle fa-2x text-white"></i>
-                                </div>
-                                <div class="deleteSection">
-                                    <button class="btn btn-outline-danger btn-sm">Delete Section</button>
-                                </div>
-                            </div>
-
-
-
-                        </div>
-                    </div>
-
-                    <div class="eachSection d-flex flex-column col-12 col-md-3 my-3 px-2">
-                        <div class="border border-light p-2">
-                            <div class="sectionName text-center mb-3">
-                                <input class="form-control" type="text" value="monday">
-                            </div>
-
-                            <div class="taskCardsArea">
-                                <div class="createTask card p-3">
-                                    <div class="taskTitle">
-                                        <h5>Task Title</h5>
-                                        <input class="form-control" type="text">
-                                    </div>
-                                    <div class="taskDescription py-3">
-                                        <h5>Task Description</h5>
-                                        <textarea class="form-control"></textarea>
-                                    </div>
-                                    <div class="buttons d-flex justify-content-end">
-                                        <div class="addTaskButton">
-                                            <button class="btn btn-outline-info btn-sm">Add</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-flex justify-content-between pt-3">
-                                <div class="addTaskButton">
-                                    <i class="fas fa-plus-circle fa-2x text-white"></i>
-                                </div>
-                                <div class="deleteSection">
-                                    <button class="btn btn-outline-danger btn-sm">Delete Section</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
             </div>
         </div>
+
     </div>
 
 
@@ -262,7 +137,7 @@
                     <!-- editButton -->
                     <i class="fas fa-edit" v-on:click="task.editForm = !task.editForm"></i>
                     <!-- checkButton -->
-                    <i class="text-success" v-bind:class="{'far fa-check-circle': !task.completed, 'fas fa-check-circle': task.completed}" v-on:click="task.completed = !task.completed"></i>
+                    <i class="text-success" v-bind:class="{'far fa-check-circle': !task.completed, 'fas fa-check-circle': task.completed}" v-on:click="task.completed = !task.completed; checkedTask()"></i>
                     <!-- favoriteButton -->
                     <i class="text-warning" v-bind:class="{'far fa-star': !task.favorite, 'fas fa-star': task.favorite}" v-on:click="task.favorite = !task.favorite"></i>
                     <!-- trashcanButton -->

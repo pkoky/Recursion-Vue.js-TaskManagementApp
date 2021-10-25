@@ -44,6 +44,10 @@ class Controller {
         }
     }
 
+    static relocation() {
+        console.log('ok')
+    }
+
     
 }
 
@@ -59,9 +63,15 @@ var taskCardComponent = ({
 
     methods: {
         changeSection() {
-            let targetSectionId = this.selectedSection.id;
-            let targetTaskObject = this.section.tasks.splice(this.index, 1);
-            this.selectedSection.tasks.push(targetTaskObject);
+            let task = this.section.tasks.splice(this.index, 1);
+            this.selectedSection.tasks.push(task[0])
+        },
+        
+        checkedTask() {
+            if (this.task.completed == true) {
+                let currTask = this.section.tasks.splice(this.index, 1);
+                this.section.tasks.push(currTask[0]);
+            }
         }
     }
 })
