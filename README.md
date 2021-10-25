@@ -1,6 +1,8 @@
 # Task Management App
 
-コンピュータサイエンス学習プラットフォーム[**Recursion**](https://recursionist.io/dashboard/users/koky)Vue.js の課題です。
+コンピュータサイエンス学習プラットフォーム[**Recursion**](https://recursionist.io/dashboard/users/koky)のVue.js の課題です。
+
+
 
 ## Project 概要/遊び方
 
@@ -8,17 +10,22 @@
 
 [TaskManagementApp Page](https://pkoky.github.io/Recursion-Vue.js-TaskManagementApp/)
 
-意識したこと
+
+
+###### 意識したこと
 
 - シンプルであること
 - わかりやすい変数名、関数名であること
 - 簡潔な関数であること
 
-工夫した機能
+
+###### 工夫した機能
 
 - iPhone のメモアプリのように、チェックをするとセクションの最下部に再配置されるようにしました。
 - セクション作成のフォームとボタンは、スクロールしても画面上部に固定されるようにしました。
 
-苦労した点
+
+###### 苦労した点
 
 - タスクのセクションを選ぶことのできるセレクトフォーム、そしてセクション移動で悩みました。
+
