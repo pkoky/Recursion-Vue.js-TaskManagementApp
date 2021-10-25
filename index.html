@@ -117,10 +117,6 @@
                 </select>
             </div>
 
-
-            <div class="sectionName">
-                <h5>section : {{ section.sectionName }}</h5>
-            </div>
             <div class="taskTitle">
                 <h4 v-if="!task.editForm">{{task.title}}</h4>
                 <input class="form-control" type="text" v-model="task.title" v-if="task.editForm">
